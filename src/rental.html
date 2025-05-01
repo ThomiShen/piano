@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钢琴租赁 - 范曾珊钢琴艺术中心</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/LOGO.png" alt="钢琴艺术中心" width="40" height="40" class="d-inline-block align-text-top">
+                范曾珊钢琴艺术中心
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mine.html">我的</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="container py-5">
+            <h2 class="text-primary mb-4"><i class="fas fa-piano me-2"></i>钢琴租赁</h2>
+            <p>这里介绍立式钢琴和三角钢琴等钢琴内容。</p>
+            <!-- 可添加图片和详细介绍 -->
+            
+            <!-- 免押金租琴介绍 -->
+            <div class="mt-5">
+                <h3 class="text-secondary mb-3"><i class="fas fa-hand-holding-usd me-2"></i>免押金租琴</h3>
+                <p>以下钢琴型号可享受免押金租赁服务：</p>
+                <select class="form-select mb-3" aria-label="选择钢琴型号" id="pianoSelect" onchange="showPianoInfo()">
+                    <option selected>选择钢琴型号</option>
+                    <option value="Yamaha U1">Yamaha U1</option>
+                    <option value="Kawai K300">Kawai K300</option>
+                    <option value="Steinway Model S">Steinway Model S</option>
+                </select>
+                <div id="pianoInfo" class="mt-3"></div>
+                <p>请联系我们了解更多详情。</p>
+            </div>
+        </div>
+    </main>
+    <nav class="bottom-nav">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col nav-item">
+                    <a class="nav-link" href="index.html"><i class="fas fa-home"></i><span>首页</span></a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="rental.html"><i class="fas fa-panorama"></i><span>钢琴租赁</span></a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="booking.html"><i class="fas fa-calendar"></i><span>预约</span></a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="mine.html"><i class="fas fa-user"></i><span>我的</span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showPianoInfo() {
+            const pianoSelect = document.getElementById('pianoSelect');
+            const pianoInfo = document.getElementById('pianoInfo');
+            const selectedPiano = pianoSelect.value;
+            let info = '';
+
+            switch (selectedPiano) {
+                case 'Yamaha U1':
+                    info = 'Yamaha U1: 立式钢琴，音色优美，适合家庭使用。';
+                    break;
+                case 'Kawai K300':
+                    info = 'Kawai K300: 立式钢琴，性价比高，适合初学者。';
+                    break;
+                case 'Steinway Model S':
+                    info = 'Steinway Model S: 三角钢琴，顶级品质，适合专业演奏。';
+                    break;
+                default:
+                    info = '';
+            }
+
+            pianoInfo.innerHTML = info;
+        }
+    </script>
+</body>
+</html>

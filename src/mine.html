@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 范曾珊钢琴艺术中心</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .profile-tabs .nav-link {
+            color: var(--text-color);
+            border-radius: 0;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .profile-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .login-prompt {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .appointment-item {
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .form-floating label {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/LOGO.png" alt="钢琴艺术中心" width="40" height="40" class="d-inline-block align-text-top">
+                范曾珊钢琴艺术中心
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">课程</a></li>
+                    <li class="nav-item"><a class="nav-link" href="custom-courses.html">私人定制课程</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="mine.html">我的</a></li>
+                    <!-- 主题切换按钮 - 大屏幕显示 -->
+                    <li class="nav-item d-none d-lg-block">
+                        <div class="nav-link" id="themeSwitch" style="cursor: pointer;">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                    </li>
+                </ul>
+                <!-- 主题切换按钮 - 小屏幕显示在下拉框左侧 -->
+                <div class="d-lg-none mt-2 mb-2" id="themeSwitchMobile" style="cursor: pointer;">
+                    <i class="fas fa-moon"></i> 切换主题
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container py-5">
+            <h2 class="text-primary mb-4"><i class="fas fa-user me-2 icon-user"></i>个人中心</h2>
+            
+            <!-- 未登录状态 -->
+            <div id="loginPrompt" class="login-prompt">
+                <img src="images/user-placeholder.png" alt="用户头像" class="profile-avatar mb-4">
+                <h3 class="mb-4">您尚未登录</h3>
+                <p class="text-muted mb-4">登录后可以查看个人信息、预约记录和学习进度</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="login.html" class="btn btn-primary px-4 py-2">登录</a>
+                    <a href="register.html" class="btn btn-outline-primary px-4 py-2">注册</a>
+                </div>
+            </div>
+            
+            <!-- 已登录状态 -->
+            <div id="userProfile" class="d-none">
+                <!-- 个人信息头部 -->
+                <div class="profile-header">
+                    <img src="images/avatar.jpg" alt="用户头像" class="profile-avatar">
+                    <h3 id="userName">张三</h3>
+                    <p class="text-muted">会员等级：<span class="badge bg-warning text-dark">钢琴爱好者</span></p>
+                </div>
+                
+                <!-- 选项卡导航 -->
+                <ul class="nav nav-tabs profile-tabs mb-4" id="profileTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">个人信息</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab">预约记录</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab">我的课程</button>
+                    </li>
+                </ul>
+                
+                <!-- 选项卡内容 -->
+                <div class="tab-content" id="profileTabsContent">
+                    <!-- 个人信息 -->
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="mb-4">基本信息</h4>
+                                <form id="profileForm">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="fullName" placeholder="姓名" value="张三">
+                                                <label for="fullName">姓名</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="tel" class="form-control" id="phone" placeholder="手机号码" value="13812345678">
+                                                <label for="phone">手机号码</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="email" placeholder="电子邮箱" value="zhangsan@example.com">
+                                                <label for="email">电子邮箱</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="pianoLevel">
+                                                    <option value="beginner">初学者</option>
+                                                    <option value="intermediate" selected>中级</option>
+                                                    <option value="advanced">高级</option>
+                                                    <option value="professional">专业级</option>
+                                                </select>
+                                                <label for="pianoLevel">钢琴水平</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control" id="interests" style="height: 100px">古典钢琴、爵士钢琴</textarea>
+                                                <label for="interests">兴趣爱好</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary px-4" onclick="saveProfile()">保存信息</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 预约记录 -->
+                    <div class="tab-pane fade" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="mb-4">预约记录</h4>
+                                <div class="list-group">
+                                    <div class="list-group-item list-group-item-action appointment-item p-3 mb-2">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">共享琴房预约</h5>
+                                            <small class="text-success">已确认</small>
+                                        </div>
+                                        <p class="mb-1">朝阳校区 - 3号琴房</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">2023-05-15 14:00-16:00</small>
+                                            <button class="btn btn-sm btn-outline-danger">取消预约</button>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item list-group-item-action appointment-item p-3 mb-2">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">钢琴陪练课</h5>
+                                            <small class="text-secondary">已完成</small>
+                                        </div>
+                                        <p class="mb-1">海淀校区 - 李老师</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">2023-05-10 10:00-11:30</small>
+                                            <button class="btn btn-sm btn-outline-primary">评价课程</button>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item list-group-item-action appointment-item p-3 mb-2">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">钢琴调音服务</h5>
+                                            <small class="text-secondary">已完成</small>
+                                        </div>
+                                        <p class="mb-1">上门服务 - 王师傅</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">2023-05-05 09:00-10:00</small>
+                                            <button class="btn btn-sm btn-outline-primary">查看详情</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <a href="booking.html" class="btn btn-primary">预约新课程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 我的课程 -->
+                    <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="mb-4">我的课程</h4>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <img src="images/course1.jpg" class="card-img-top" alt="钢琴基础课程">
+                                            <div class="card-body">
+                                                <h5 class="card-title">钢琴基础课程</h5>
+                                                <div class="progress mb-3" style="height: 5px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <p class="card-text">已学习 15/20 课时</p>
+                                                <a href="#" class="btn btn-primary">继续学习</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <img src="images/course2.jpg" class="card-img-top" alt="古典钢琴进阶">
+                                            <div class="card-body">
+                                                <h5 class="card-title">古典钢琴进阶</h5>
+                                                <div class="progress mb-3" style="height: 5px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <p class="card-text">已学习 6/20 课时</p>
+                                                <a href="#" class="btn btn-primary">继续学习</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <a href="courses.html" class="btn btn-outline-primary">浏览更多课程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="courses.html">
+                        <i class="fas fa-music icon-music"></i>
+                        <span>课程</span>
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="booking.html">
+                        <i class="fas fa-calendar"></i>
+                        <span>预约</span>
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link active" href="mine.html">
+                        <i class="fas fa-user"></i>
+                        <span>我的</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 模拟登录状态切换
+        let isLoggedIn = false; // 默认未登录
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查登录状态并显示相应界面
+            checkLoginStatus();
+            
+            // 主题切换功能
+            const themeSwitch = document.getElementById('themeSwitch');
+            const themeSwitchMobile = document.getElementById('themeSwitchMobile');
+            const htmlElement = document.documentElement;
+            
+            // 检查本地存储中的主题设置
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                updateThemeIcons(savedTheme);
+            }
+            
+            // 主题切换事件
+            themeSwitch.addEventListener('click', function() {
+                toggleTheme();
+            });
+            
+            themeSwitchMobile.addEventListener('click', function() {
+                toggleTheme();
+            });
+            
+            // 切换主题
+            function toggleTheme() {
+                const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                updateThemeIcons(newTheme);
+            }
+            
+            // 更新所有主题图标
+            function updateThemeIcons(theme) {
+                const icons = document.querySelectorAll('#themeSwitch i, #themeSwitchMobile i');
+                icons.forEach(icon => {
+                    if (theme === 'dark') {
+                        icon.classList.remove('fa-moon');
+                        icon.classList.add('fa-sun');
+                    } else {
+                        icon.classList.remove('fa-sun');
+                        icon.classList.add('fa-moon');
+                    }
+                });
+            }
+        });
+        
+        // 检查登录状态
+        function checkLoginStatus() {
+            const loginPrompt = document.getElementById('loginPrompt');
+            const userProfile = document.getElementById('userProfile');
+            
+            // 这里可以添加实际的登录状态检查逻辑
+            // 为了演示，我们使用一个变量来模拟
+            
+            if (isLoggedIn) {
+                loginPrompt.classList.add('d-none');
+                userProfile.classList.remove('d-none');
+            } else {
+                loginPrompt.classList.remove('d-none');
+                userProfile.classList.add('d-none');
+            }
+        }
+        
+        // 保存个人信息
+        function saveProfile() {
+            // 这里可以添加保存个人信息的逻辑
+            alert('个人信息保存成功！');
+        }
+        
+        // 为了演示，添加一个快速切换登录状态的方法（实际项目中不需要）
+        function toggleLoginStatus() {
+            isLoggedIn = !isLoggedIn;
+            checkLoginStatus();
+        }
+        
+        // 双击页面标题切换登录状态（仅用于演示）
+        document.querySelector('h2').addEventListener('dblclick', toggleLoginStatus);
+    </script>
+</body>
+</html>

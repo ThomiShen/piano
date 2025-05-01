@@ -1,0 +1,187 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: rgba(255, 255, 255, 0.8);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --text-color: #212529;
+    --border-color: rgba(0, 0, 0, 0.125);
+    --nav-bg: rgba(248, 249, 250, 0.85);
+}
+
+[data-theme="dark"] {
+    --primary-color: #4dabff;
+    --secondary-color: #adb5bd;
+    --background-color: rgba(33, 37, 41, 0.85);
+    --card-bg: rgba(52, 58, 64, 0.7);
+    --text-color: #f8f9fa;
+    --border-color: rgba(255, 255, 255, 0.125);
+    --nav-bg: rgba(33, 37, 41, 0.9);
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-color);
+    background-image: url('../images/bg-pattern.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    transition: all 0.3s ease;
+    padding-bottom: 4rem;
+}
+
+/* 毛玻璃效果 */
+.navbar {
+    background-color: var(--nav-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card {
+    background-color: var(--card-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+main .container {
+    background-color: var(--background-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* 底部导航栏 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0.5rem 0;
+}
+
+.bottom-nav .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--secondary-color);
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.bottom-nav .nav-link i {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.bottom-nav .nav-link.active {
+    color: var(--primary-color);
+}
+
+/* 主题切换按钮 */
+.theme-switch {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1001;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+}
+
+.theme-switch i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* 彩色图标样式 */
+.icon-building { color: #3498db; }
+.icon-piano { color: #9b59b6; }
+.icon-money { color: #2ecc71; }
+.icon-guitar { color: #e74c3c; }
+.icon-music { color: #f39c12; }
+.icon-friends { color: #1abc9c; }
+.icon-graduation { color: #34495e; }
+.icon-book { color: #d35400; }
+.icon-laptop { color: #16a085; }
+.icon-globe { color: #27ae60; }
+.icon-camera { color: #8e44ad; }
+.icon-crown { color: #f1c40f; }
+.icon-door { color: #e67e22; }
+.icon-tools { color: #7f8c8d; }
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    main .container {
+        padding: 1rem;
+    }
+}
+
+
+/* 固定导航栏和底栏的实现方案
+
+我注意到您希望将导航栏和底栏都设置为固定位置，这样用户在滚动页面时它们仍然可见。这是一个很好的用户体验设计，我将为您实现这个功能。
+
+## CSS 修改方案
+
+我们需要修改 `/Users/thomi/piano/src/css/style.css` 文件，为导航栏和底栏添加固定定位：
+```css
+/* 固定导航栏 */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--nav-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 为固定导航栏添加内容偏移 */
+body {
+    padding-top: 70px; /* 根据导航栏高度调整 */
+    padding-bottom: 70px; /* 根据底栏高度调整 */
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-color);
+    background-image: url('../images/bg-pattern.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    transition: all 0.3s ease;
+}
+
+/* 底部导航栏 - 已经是固定的，保持不变 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0.5rem 0;
+}```
